@@ -1,0 +1,338 @@
+<div class="container">
+  <h2 style="text-align: center;">Radicaci&oacute;n de una PQRSD</h2>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+    <symbol
+      id="exclamation-triangle-fill"
+      fill="currentColor"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+      />
+    </symbol>
+  </svg>
+  <div class="alert alert-warning d-flex align-items-center" role="alert">
+    <svg
+      class="bi flex-shrink-0 me-2"
+      width="24"
+      height="24"
+      role="img"
+      aria-label="Warning:"
+    >
+      <use xlink:href="#exclamation-triangle-fill" />
+    </svg>
+    <div>
+      Los campos marcados con <strong>(*)</strong> en las 3 pesta&ntilde;as es
+      obligatoria su gesti&oacute;n.
+    </div>
+  </div>
+  <ul class="nav nav-tabs" id="myTab" role="navigation tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="home-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#home"
+        type="button"
+        role="tab"
+        aria-controls="home"
+        aria-selected="true"
+      >
+        <strong>1.</strong> Datos Remitente
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="profile-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#profile"
+        type="button"
+        role="tab"
+        aria-controls="profile"
+        aria-selected="false"
+      >
+        <strong>2.</strong> Datos de la solicitud
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="contact-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#contact"
+        type="button"
+        role="tab"
+        aria-controls="contact"
+        aria-selected="false"
+      >
+        <strong>3.</strong> Seguridad y Habeas Data
+      </button>
+    </li>
+  </ul>
+  <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+    <div class="tab-content" id="myTabContent">
+      <div
+        class="tab-pane fade show active"
+        id="home"
+        role="tabpanel"
+        aria-labelledby="home-tab"
+      >
+        <div class="row">
+          <!-- Campo Tipo de Tercero -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label class="form-label" for="tiporemitente">(*) Tipo de Remitente</label
+            >
+            <input
+              type="radio"
+              name="tiporemitente"
+              id="tiporemitente0"
+              value="0"
+              required
+            />An&oacute;nimo &nbsp;
+            <input type="radio" name="tiporemitente" id="tiporemitente1" value="1" />Persona
+            Natural/Jurídica &nbsp;
+            <input type="radio" name="tiporemitente" id="tiporemitente2" value="2" />Empresa/Entidad
+            <div class="invalid-tooltip">
+              Please choose a unique and valid username.
+            </div>
+          </div>
+          <!-- Campo Nombre -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              class="form-control"
+              placeholder="Ingrese su(s) nombre(s)"
+              [(ngModel)]="formData.nombres"
+              maxlength="40"
+            />
+          </div>
+          <!-- Campo Apellido -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input
+              type="text"
+              id="apellido"
+              name="apellido"
+              class="form-control"
+              placeholder="Ingrese su(s) apellido(s)"
+              [(ngModel)]="formData.apellidos"
+              maxlength="80"
+            />
+          </div>
+          <!-- Campo Dirección -->
+          <div class="col-lg-8 col-md-6 col-sm-12 mb-3">
+            <label for="address" class="form-label">Dirección</label>
+            <input
+              type="text"
+              class="form-control"
+              id="address"
+              name="address"
+              placeholder="Ingrese su direcci&oacute;n de correspondencia"
+              [(ngModel)]="formData.direccion"
+              maxlength="120"
+            />
+          </div>
+          <!-- Campo Ciudad -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label for="city" class="form-label">Ciudad</label>
+            <input
+              type="text"
+              class="form-control"
+              id="city"
+              name="city"
+              placeholder="Ingrese su ciudad de residencia"
+              [(ngModel)]="formData.ciudad"
+              maxlength="40"
+            />
+          </div>
+          <!-- Campo Pais -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label for="countryId" class="form-label">Pa&iacute;s</label>
+            <select
+              class="form-select"
+              id="countryId"
+              name="countryId"
+              [(ngModel)]="formData.paisId">
+              <option value="">Seleccione un país</option>
+              <option *ngFor="let pais of paises" [value]="pais.id">
+                {{ pais.nombre }}
+              </option>
+            </select>
+          </div>
+          <!-- Campo Teléfono -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input
+              type="tel"
+              class="form-control"
+              id="telefono"
+              name="telefono"
+              placeholder="Ingrese su número de teléfono"
+              [(ngModel)]="formData.telefono"
+              maxlength="16"
+            />
+          </div>
+          <!-- Campo Correo Electrónico -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Ingresa tu correo electrónico"
+              [(ngModel)]="formData.correoelectronico"
+              maxlength="40"
+            />
+          </div>
+          <!-- Campo Tipo Identificación -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label for="documentId" class="form-label">Tipo Identificaci&oacute;n</label>
+            <select
+              class="form-select"
+              id="documentId"
+              name="documentId"
+              [(ngModel)]="formData.tipodocumentoId">
+              <option value="">Seleccione un tipo identificaci&oacute;n</option>
+              <option *ngFor="let tdcto of tdctos" [value]="tdcto.id">
+                {{ tdcto.nombre }}
+              </option>
+            </select>
+          </div>
+          <!-- Campo Número Identificación -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label for="document" class="form-label">N&uacute;mero Identificaci&oacute;n</label>
+            <input
+              type="text"
+              class="form-control"
+              id="document"
+              name="document"
+              placeholder="Ingrese su número de identificaci&oacute;n"
+              [(ngModel)]="formData.numerodocumento"
+              maxlength="12"
+            />
+          </div>
+          <!-- Campo Tipo de Envío -->
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label class="form-label" for="tipoenvio">(*) Preferencia de respuesta</label
+            >
+            <input
+              type="radio"
+              name="tipoenvio"
+              value="0"
+              required
+            />Correo Electr&oacute;nico &nbsp;
+            <input type="radio" name="tipoenvio" value="1" />Direcci&oacute;n de correspondencia &nbsp;
+          </div>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="profile"
+        role="tabpanel"
+        aria-labelledby="profile-tab"
+      >
+        <div class="row">
+          <!-- Campo Asunto -->
+          <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+            <label class="form-label" for="asunto">(*) Asunto</label>
+            <textarea
+              id="asunto"
+              name="asunto"
+              class="form-control"
+              placeholder="Ingrese el asunto de su solicitud"
+              [(ngModel)]="formData.asunto"
+              rows="3"
+              maxlength="2000"
+              autofocus 
+              (input)="calcularCaracteres()"
+              required>
+            </textarea>
+            <div id="the-count">
+              <span id="current">{{ characterCount }}</span>
+              <span id="maximum">/ 2000</span>
+            </div>
+          </div>
+          <!-- Campo Anexos -->
+          <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+          <label for="anexos" class="form-label">Anexos</label>
+          <small><strong>Restricciones:</strong> - Solo se aceptan extensiones {{ extsAceptados }}. - M&aacute;ximo de {{ maxFileCount }} archivos. - Longitud de nombre {{ maxFileNameLength }} caracteres. - Sumatoria de tamaños de archivos no mayor a {{ maxTotalSizeMB }} MB.</small>
+          <input
+            type="file"
+            id="anexos"
+            name="anexos"
+            class="form-control"
+            placeholder="Seleccione archivos"
+            (change)="validarAnexos($event)"
+            [(ngModel)]="formData.anexos"
+            accept="{{ mimeAceptados}}"
+            multiple
+          />
+          <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+          <p *ngIf="validFiles.length > 0">Valid Files:</p>
+          <ul>
+            <li *ngFor="let file of validFiles">{{ file.name }} ({{ file.size | number }} bytes)</li>
+          </ul>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="contact"
+        role="tabpanel"
+        aria-labelledby="contact-tab"
+      >
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+            <label class="form-label" for="chkhabeasdata">(*)</label>
+            <input type="checkbox" id="chkhabeasdata" name="chkhabeasdata"> los términos y la Política de Tratamiento de Datos Personales
+        </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+    <button type="button" (click)="generarPDF()" class="btn btn-primary mt-3">PDF</button>
+  </form>
+</div>
+<script lang="javascript">
+$('textarea').keyup(function() {
+    alert('ojo');
+    var characterCount = $(this).val().length,
+        current = $('#current'),
+        maximum = $('#maximum'),
+        theCount = $('#the-count');
+      
+    current.text(characterCount);
+   
+    
+    /*This isn't entirely necessary, just playin around*/
+    if (characterCount < 70) {
+      current.css('color', '#666');
+    }
+    if (characterCount > 70 && characterCount < 90) {
+      current.css('color', '#6d5555');
+    }
+    if (characterCount > 90 && characterCount < 100) {
+      current.css('color', '#793535');
+    }
+    if (characterCount > 100 && characterCount < 120) {
+      current.css('color', '#841c1c');
+    }
+    if (characterCount > 120 && characterCount < 139) {
+      current.css('color', '#8f0001');
+    }
+    
+    if (characterCount >= 140) {
+      maximum.css('color', '#8f0001');
+      current.css('color', '#8f0001');
+      theCount.css('font-weight','bold');
+    } else {
+      maximum.css('color','#666');
+      theCount.css('font-weight','normal');
+    }   
+  });
+</script>

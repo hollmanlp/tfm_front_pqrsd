@@ -1,0 +1,45 @@
+Angular 18 requiere npm 6.11.0 / 7.5.6 / > 8 y node 18.19.1 / 20.11.1 / > 22 => node -v / npm -v
+Actualizamos node => nvm install 18
+Seleccionamos la version => nvm use 18
+npm uninstall -g @angular/cli
+npm cache clean --force
+
+Instalamos entono virtual de NodeJS (Ventana cmd -- NO POwershell)
+==================================================================
+python --version => 3.11.9
+pip install virtualenv
+virtualenv --verion  => 20.30.0
+pip install nodeenv
+nodeenv --version  => 1.9.1
+Creamos carpeta donde instalaremos el entorno virtual => mkdir D:\unir\4. TFM\frontend
+cd D:\unir\4. TFM\frontend          // Creamos la carpeta del proyecto
+nodeenv --node=22.14.0 .venv        // Creamos el ambiente virtual
+
+Activamos el entorno virtual
+=============================
+D:\unir\4. TFM\frontend>.venv\Scripts\activate.bat              // Ejecutar con cmd NO con powershell
+(.venv) D:\unir\4. TFM\frontend>node --version  => v22.14.0
+(.venv) D:\unir\4. TFM\frontend>npm i -g @angular/cli@18
+(.venv) D:\unir\4. TFM\frontend>npm i jspdf
+(.venv) D:\unir\4. TFM\frontend>npm install html2pdf.js
+
+Creamos e ingresamos al proyecto
+================================
+(.venv) D:\unir\4. TFM\frontend>ng new frontend 
+(.venv) D:\unir\4. TFM\frontend>cd frontend
+(.venv) D:\unir\4. TFM\frontend\frontend> ng serve --open
+
+(.venv) D:\unir\4. TFM\frontend\frontend> ng generate component rdccpqrsd
+(.venv) D:\unir\4. TFM\frontend\frontend> ng generate component csltpqrsd
+
+
+proyecto> ng generate component formpqrsd --standalone=false
+proyecto> ng generate service tramite
+proyecto> ng generate service pais
+
+proyecto> ng add @fortawesome/angular-fontawesome  // Version 6 y Free Solid Icons
+
+node backend.js
+ng serve --open
+
+Los módulos no se ven, los componentes si se ven.

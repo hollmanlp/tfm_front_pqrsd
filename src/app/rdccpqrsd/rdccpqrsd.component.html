@@ -70,7 +70,7 @@
       </button>
     </li>
   </ul>
-  <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+  <form (ngSubmit)="onSubmit()" [formGroup]="formData">
     <div class="tab-content" id="myTabContent">
       <div
         class="tab-pane fade show active"
@@ -81,87 +81,98 @@
         <div class="row">
           <!-- Campo Tipo de Tercero -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <label class="form-label" for="tiporemitente">(*) Tipo de Remitente</label
-            >
-            <input
-              type="radio"
-              name="tiporemitente"
-              id="tiporemitente0"
-              value="0"
-              required
-            />An&oacute;nimo &nbsp;
-            <input type="radio" name="tiporemitente" id="tiporemitente1" value="1" />Persona
-            Natural/Jurídica &nbsp;
-            <input type="radio" name="tiporemitente" id="tiporemitente2" value="2" />Empresa/Entidad
-            <div class="invalid-tooltip">
-              Please choose a unique and valid username.
+            <strong>(*)</strong> Tipo de Remitente <br />
+            <input type="radio" formControlName="tiporemitente" id="tiporemitente0" value="0" required />An&oacute;nimo &nbsp;
+            <input type="radio" formControlName="tiporemitente" id="tiporemitente1" value="1" />Persona Natural/Jurídica &nbsp;
+            <input type="radio" formControlName="tiporemitente" id="tiporemitente2" value="2" />Empresa/Entidad
+            <div class="msg_form_error" *ngIf="formData.get('tiporemitente')?.invalid && formData.get('tiporemitente')?.touched">
+              Tipo de Remitente es requerido.
             </div>
           </div>
           <!-- Campo Nombre -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
+            <label *ngIf="nombres_obligatorio" for="nombres" class="form-label"><strong>(*)</strong> Nombre(s)</label>
+            <label *ngIf="!nombres_obligatorio" for="nombres" class="form-label">Nombre(s)</label>
             <input
               type="text"
-              id="nombre"
-              name="nombre"
+              id="nombres"
+              formControlName="nombres"
               class="form-control"
               placeholder="Ingrese su(s) nombre(s)"
-              [(ngModel)]="formData.nombres"
               maxlength="40"
+              autocomplete="given-name"
             />
+            <div class="msg_form_error" *ngIf="formData.get('nombres')?.invalid && formData.get('nombres')?.touched">
+              {{ nombres_obligatorio ? 'Nombre(s) es requerido.' : '' }}
+            </div>
           </div>
           <!-- Campo Apellido -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <label for="apellido" class="form-label">Apellido</label>
+            <label *ngIf="apellidos_obligatorio" for="apellidos" class="form-label"><strong>(*)</strong> Apellido(s)</label>
+            <label *ngIf="!apellidos_obligatorio" for="apellidos" class="form-label">Apellido(s)</label>
             <input
               type="text"
-              id="apellido"
-              name="apellido"
+              id="apellidos"
+              formControlName="apellidos"
               class="form-control"
               placeholder="Ingrese su(s) apellido(s)"
-              [(ngModel)]="formData.apellidos"
               maxlength="80"
+              autocomplete="family-name"
             />
+            <div class="msg_form_error" *ngIf="formData.get('apellidos')?.invalid && formData.get('apellidos')?.touched">
+              {{ apellidos_obligatorio ? 'Apellido(s) es requerido.' : '' }}
+            </div>
           </div>
           <!-- Campo Dirección -->
           <div class="col-lg-8 col-md-6 col-sm-12 mb-3">
-            <label for="address" class="form-label">Dirección</label>
+            <label *ngIf="direccion_obligatorio" for="direccion" class="form-label"><strong>(*)</strong> Dirección</label>
+            <label *ngIf="!direccion_obligatorio" for="direccion" class="form-label">Dirección</label>
             <input
               type="text"
               class="form-control"
-              id="address"
-              name="address"
+              id="direccion"
+              formControlName="direccion"
               placeholder="Ingrese su direcci&oacute;n de correspondencia"
-              [(ngModel)]="formData.direccion"
               maxlength="120"
+              autocomplete="address-line1"
             />
+            <div class="msg_form_error" *ngIf="formData.get('direccion')?.invalid && formData.get('direccion')?.touched">
+              {{ direccion_obligatorio ? 'Dirección es requerida.' : '' }}
+            </div>
           </div>
           <!-- Campo Ciudad -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <label for="city" class="form-label">Ciudad</label>
+            <label *ngIf="ciudad_obligatorio" for="ciudad" class="form-label"><strong>(*)</strong> Ciudad</label>
+            <label *ngIf="!ciudad_obligatorio" for="ciudad" class="form-label">Ciudad</label>
             <input
               type="text"
               class="form-control"
-              id="city"
-              name="city"
+              id="ciudad"
+              formControlName="ciudad"
               placeholder="Ingrese su ciudad de residencia"
-              [(ngModel)]="formData.ciudad"
               maxlength="40"
+              autocomplete="address-level2"
             />
+            <div class="msg_form_error" *ngIf="formData.get('ciudad')?.touched && formData.get('ciudad')?.invalid">
+              {{ ciudad_obligatorio ? 'Ciudad es requerida.' : '' }}
+            </div>
           </div>
           <!-- Campo Pais -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <label for="countryId" class="form-label">Pa&iacute;s</label>
+            <label *ngIf="paisId_obligatorio" for="paisId" class="form-label"><strong>(*)</strong> País</label>
+            <label *ngIf="!paisId_obligatorio" for="paisId" class="form-label">País</label>
             <select
               class="form-select"
-              id="countryId"
-              name="countryId"
-              [(ngModel)]="formData.paisId">
+              id="paisId"
+              formControlName="paisId">
               <option value="">Seleccione un país</option>
               <option *ngFor="let pais of paises" [value]="pais.id">
                 {{ pais.nombre }}
               </option>
             </select>
+            <div class="msg_form_error" *ngIf="formData.get('paisId')?.touched && formData.get('paisId')?.invalid">
+              {{ paisId_obligatorio ? 'País es requerido.' : '' }}
+            </div>
           </div>
           <!-- Campo Teléfono -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
@@ -170,33 +181,39 @@
               type="tel"
               class="form-control"
               id="telefono"
-              name="telefono"
+              formControlName="telefono"
               placeholder="Ingrese su número de teléfono"
-              [(ngModel)]="formData.telefono"
               maxlength="16"
+              autocomplete="tel"
             />
           </div>
           <!-- Campo Correo Electrónico -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <label for="email" class="form-label">Correo Electrónico</label>
+            <label *ngIf="correoele_obligatorio" for="correoelectronico" class="form-label"><strong>(*)</strong> Correo Electrónico</label>
+            <label *ngIf="!correoele_obligatorio" for="correoelectronico" class="form-label">Correo Electrónico</label>
             <input
               type="email"
               class="form-control"
-              id="email"
-              name="email"
+              id="correoelectronico"
+              formControlName="correoelectronico"
               placeholder="Ingresa tu correo electrónico"
-              [(ngModel)]="formData.correoelectronico"
               maxlength="40"
+              autocomplete="email"
             />
+            <div class="msg_form_error" *ngIf="formData.get('correoelectronico')?.touched && formData.get('correoelectronico')?.invalid && formData.get('correoelectronico')?.errors?.['required']">
+              {{ correoele_obligatorio ? 'Correo electrónico es requerido.' : '' }}
+            </div>
+            <div class="msg_form_error" *ngIf="formData.get('correoelectronico')?.touched && formData.get('correoelectronico')?.invalid && formData.get('correoelectronico')?.errors?.['email']">
+              {{ correoele_obligatorio ? 'Correo electrónico no válido.' : '' }}
+            </div>
           </div>
           <!-- Campo Tipo Identificación -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <label for="documentId" class="form-label">Tipo Identificaci&oacute;n</label>
+            <label for="tipodocumentoId" class="form-label">Tipo Identificaci&oacute;n</label>
             <select
               class="form-select"
-              id="documentId"
-              name="documentId"
-              [(ngModel)]="formData.tipodocumentoId">
+              id="tipodocumentoId"
+              formControlName="tipodocumentoId">
               <option value="">Seleccione un tipo identificaci&oacute;n</option>
               <option *ngFor="let tdcto of tdctos" [value]="tdcto.id">
                 {{ tdcto.nombre }}
@@ -205,28 +222,24 @@
           </div>
           <!-- Campo Número Identificación -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <label for="document" class="form-label">N&uacute;mero Identificaci&oacute;n</label>
+            <label for="numerodocumento" class="form-label">N&uacute;mero Identificaci&oacute;n</label>
             <input
               type="text"
               class="form-control"
-              id="document"
-              name="document"
+              id="numerodocumento"
+              formControlName="numerodocumento"
               placeholder="Ingrese su número de identificaci&oacute;n"
-              [(ngModel)]="formData.numerodocumento"
               maxlength="12"
             />
           </div>
-          <!-- Campo Tipo de Envío -->
+          <!-- Campo Preferencia de Envío -->
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-            <label class="form-label" for="tipoenvio">(*) Preferencia de respuesta</label
-            >
-            <input
-              type="radio"
-              name="tipoenvio"
-              value="0"
-              required
-            />Correo Electr&oacute;nico &nbsp;
-            <input type="radio" name="tipoenvio" value="1" />Direcci&oacute;n de correspondencia &nbsp;
+            <strong>(*)</strong> Preferencia de respuesta<br />
+            <input type="radio" id="preferenciarespuesta0" formControlName="preferenciarespuesta" value="0" (change)="valida_prefresp($event)" required />Correo Electr&oacute;nico &nbsp;
+            <input type="radio" id="preferenciarespuesta1" formControlName="preferenciarespuesta" value="1" (change)="valida_prefresp($event)" />Direcci&oacute;n de correspondencia &nbsp;
+            <div class="msg_form_error" *ngIf="formData.get('preferenciarespuesta')?.invalid && formData.get('preferenciarespuesta')?.touched">
+              Preferencia de respuesta es requerido.
+            </div>
           </div>
         </div>
       </div>
@@ -239,22 +252,16 @@
         <div class="row">
           <!-- Campo Asunto -->
           <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
-            <label class="form-label" for="asunto">(*) Asunto</label>
-            <textarea
-              id="asunto"
-              name="asunto"
-              class="form-control"
-              placeholder="Ingrese el asunto de su solicitud"
-              [(ngModel)]="formData.asunto"
-              rows="3"
-              maxlength="2000"
-              autofocus 
-              (input)="calcularCaracteres()"
-              required>
+            <label class="form-label" for="asunto"><strong>(*)</strong> Asunto</label>
+            <textarea id="asunto" formControlName="asunto" class="form-control" placeholder="Ingrese el asunto de su solicitud"
+              rows="3" maxlength="2000" autofocus (input)="calcularCaracteres()" required>
             </textarea>
             <div id="the-count">
               <span id="current">{{ characterCount }}</span>
-              <span id="maximum">/ 2000</span>
+              <span id="maximum"> / 2000</span>
+            </div>
+            <div class="msg_form_error" *ngIf="formData.get('asunto')?.invalid && formData.get('asunto')?.touched">
+              Asunto es requerido.
             </div>
           </div>
           <!-- Campo Anexos -->
@@ -264,16 +271,15 @@
           <input
             type="file"
             id="anexos"
-            name="anexos"
+            formControlName="anexos"
             class="form-control"
             placeholder="Seleccione archivos"
             (change)="validarAnexos($event)"
-            [(ngModel)]="formData.anexos"
             accept="{{ mimeAceptados}}"
             multiple
           />
           <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
-          <p *ngIf="validFiles.length > 0">Valid Files:</p>
+          <p *ngIf="validFiles.length > 0">Anexos válidos:</p>
           <ul>
             <li *ngFor="let file of validFiles">{{ file.name }} ({{ file.size | number }} bytes)</li>
           </ul>
@@ -289,12 +295,15 @@
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
             <label class="form-label" for="chkhabeasdata">(*)</label>
-            <input type="checkbox" id="chkhabeasdata" name="chkhabeasdata"> los términos y la Política de Tratamiento de Datos Personales
-        </div>
+            <input type="radio" id="habeasdata" formControlName="habeasdata" value="1"> Acepto los términos y la Política de Tratamiento de Datos Personales
+            <div class="msg_form_error" *ngIf="formData.get('habeasdata')?.invalid && formData.get('habeasdata')?.touched">
+              Aceptar los términos es requerido.
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+    <button type="submit" class="btn btn-primary mt-3" [disabled]="!formData.valid">Enviar</button>
     <button type="button" (click)="generarPDF()" class="btn btn-primary mt-3">PDF</button>
   </form>
 </div>

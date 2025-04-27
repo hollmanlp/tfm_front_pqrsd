@@ -34,6 +34,11 @@ button {
     font-size: 0.875rem;
 }
 
+.msg_form_error {
+    color: red;
+    font-size: 0.875rem;
+}
+
 @media (max-width: 480px) {
     .container {
         width: 95%;
